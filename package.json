@@ -1,0 +1,39 @@
+{
+  "name": "3rdtry",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel server.js --out-dir build",
+    "dev-start": "babel-watch server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-ec2": "^3.18.0",
+    "@aws-sdk/node-http-handler": "^3.3.0",
+    "@aws-sdk/types": "^3.3.0",
+    "esm": "^3.2.25",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.3.2",
+    "jqwidgets-framework": "^12.0.4",
+    "moment": "^2.29.1",
+    "node-fetch": "^2.6",
+    "uuid": "^8.3.2",
+    "uuidv4": "^6.2.8"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.3",
+    "@types/node": "^14.0.23",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-watch": "^7.4.1",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.0.2"
+  },
+  "type": "module",
+  "optionalDependencies": {
+    "fsevents": "*"
+  }
+}
