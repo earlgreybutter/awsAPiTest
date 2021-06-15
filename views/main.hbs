@@ -1,0 +1,65 @@
+    <script>
+      var data = `{{gridStr}}`.replaceAll('&quot;', '"');
+        $(function () {
+            
+            /* JqWidget Pattern
+             * source 생성 -> dataAdapter = new $.jqx.dataAdapter(source) -> 실제 그리드가 들어갈 태그에 해당 생성 함수 실행 */
+            
+            // 데이터(Source) 생성
+            // generatedata()는 Json 배열을 무작위로 생성해주는 예제용 함수입니다. localdata의 타입은 Json 배열형식으로 넣어주시면 되요.
+            var source = {
+                localdata : data,
+                datatype : 'json',
+                datafields :
+                [
+                    { name: 'Groups', type: 'string' },
+                    { name: 'Instances', type: 'Object' },
+                    { name: 'OwnerId', type: 'string' },
+                    { name: 'ReservationId', type: 'string' },
+                ],
+                updaterow : function ( rowid, rowdata ) {
+                    console.log(rowid + " : " + rowdata);
+                }
+            };
+            
+            // data Adapter 생성
+            var dataAdapter = new $.jqx.dataAdapter(source, {
+                loadComplete : function (data) { alert("데이터 로드가 완료되었습니다.") },
+                loadError : function (xhr, status, error) { alert("데이터를 로드할 수 없습니다."); }
+            });
+            
+            
+            var renderer = function (row, culumfield, value, defaulthtml, columnproperties) {
+                
+                if(value > 3)
+                    return $($.parseHTML(defaulthtml)).css('color', 'red').prop('outerHTML');
+                return defaulthtml;
+            };
+            
+            // Grid 생성
+            $("#target").jqxGrid({
+                pageable: true,
+                autoheight: true,
+                width : 1000,
+                source : dataAdapter,
+                columns: [
+                    { text: 'Groups', datafield: 'Groups', columntype: 'textbox', width: 170 },
+                    { text: 'Instances', datafield: 'Instances', columntype: 'textbox', width: 170 },
+                    { text: 'OwnerId', datafield: 'OwnerId', width: 170 },
+                    { text: 'ReservationId', datafield: 'ReservationId', width: 200 }
+                ]
+                /*
+                 * columns, 인자 Options
+                 * text : 'String Table Header'                 | 해당 열의 타이틀(제목)지정
+                 * columntype : '
+                 * cellsalign : 'left, center, right'           | 해당 열의 Cell들의 정렬 방식을 정의할 수 있다.
+                 * cellsformat: 'String Format Options'         | http://www.jqwidgets.com/jquery-widgets-documentation/documentation/jqxgrid/jquery-grid-cellsformatting.htm
+                 * cellsrenderer: function (row, columfield, value, defaulthtml, columnproperties)   | 간단히 말해서 셀을 커스텀으로 렌더링하고 싶을 때 쓰이는 옵션
+                 * pageable , autoheight : true, false(Defualt) | Grid Paging 기능 구현 옵션
+                 */
+            });
+            
+            
+            // Localiztion 방법 (예를 들어서 
+        });
+    </script>

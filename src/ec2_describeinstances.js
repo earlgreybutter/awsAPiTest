@@ -8,11 +8,12 @@ const ec2Client = new EC2Client({ region: REGION });
 const run = async () => {
   try {
     const data = await ec2Client.send(new DescribeInstancesCommand({}));
-    console.log("Success", JSON.stringify(data));
     var resultData = JSON.stringify(data);
     return resultData;
   } catch (err) {
     console.log("Error", err);
   }
 };
-export default run();
+
+const resultData = await run();
+export default resultData;

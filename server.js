@@ -1,8 +1,8 @@
-import express from "express";
+import express, { json } from "express";
 import hbs from "express-handlebars";
 import bodyParser from "body-parser";
 import path from "path";
-import Reflection from "./src/controllers/Reflection.js";
+import resultData from "./src/ec2_describeinstances.js";
 
 const app = express();
 const __dirname = path.resolve();
@@ -15,28 +15,19 @@ app.engine(
   hbs({
     extname: "hbs",
     defaultLayout: "layout.hbs",
-    // partialsDir: "partials",
   })
 );
 app.set("view engine", "hbs");
+app.set("views", __dirname + "/views");
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({ extended: false }));
 
+var jsonParse = JSON.parse(resultData);
+var gridData = jsonParse["Reservations"];
+var gridStr = JSON.stringify(gridData);
 app.get("/", (req, res) => {
-  res.render("home", {});
-});
-
-// app.get("/", (req, res) => {
-//   return res
-//     .status(200)
-//     .send({ message: "YAY! Congratulations! Your first endpoint is working" });
-// });
-
-app.use((req, res) => {
-  res.render("404");
+  res.render("main.hbs", { gridStr });
 });
 
 app.listen(3000);
 console.log("app running on port ", 3000);
-
-app.get("/resultData", Reflection.getAll);
